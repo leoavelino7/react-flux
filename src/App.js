@@ -17,6 +17,7 @@ class App extends Component {
       this.add = this.add.bind(this);
       this.remove = this.remove.bind(this);
       this.update = this.update.bind(this);
+      this.clear = this.clear.bind(this);
   }
 
   async componentDidMount() {
@@ -61,11 +62,28 @@ class App extends Component {
     })
   }
 
+  clear() {
+    const todo = [],
+      done = [],
+      { todoList } = this.state;
+
+    todoList.forEach(item => {
+      (item.isChecked) ? done.push(item) : todo.push(item); 
+    });
+
+    done.forEach(item => this.remove(item.id));
+    this.setState({
+      todoList: todo
+    })
+  }
+
   render() {
     const { state } = this;
     return (
       <div className="App">
           <NewTodoItem onAdd={this.add}/>
+          <hr />
+          <button className="tw-btn" onClick={this.clear}>Limpar</button>
           <hr />
           <TodoList items={state.todoList} onRemove={this.remove} onUpdate={this.update} />
       </div>
