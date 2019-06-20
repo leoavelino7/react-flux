@@ -11,7 +11,7 @@ class TodoList extends Component {
         const { props } = this,
             { items } = props;
 
-        if(items.lenght === 0) {
+        if(items.length === 0) {
             return <div>No items</div>
         }
 
