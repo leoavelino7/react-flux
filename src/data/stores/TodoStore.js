@@ -4,6 +4,10 @@ import {
     TodoService
 } from "../services/TodoService";
 
+import {
+    TodoConstants
+} from "../constants/TodoConstants";
+
 const Channel = new Events.EventEmitter(),
     CHANGE_EVENT = "change";
 
@@ -59,6 +63,40 @@ const TodoStore = {
     },
     removeChangeListener(callback) {
         Channel.removeListener(CHANGE_EVENT, callback);
+    }
+}
+
+async function handleAction(action) {
+    // eslint-disable-next-line default-case
+    switch (action.actionType) {
+        case TodoConstants.TODO_CREATE:
+            const {
+                description
+            } = action.data;
+            await createItem(description);
+            TodoStore.emitChange();
+            break;
+
+        case TodoConstants.TODO_UPDATE:
+            const {
+                item
+            } = action.data;
+            await updateItem(item);
+            TodoStore.emitChange();
+            break;
+
+        case TodoConstants.TODO_REMOVE:
+            const {
+                itemId
+            } = action.data;
+            await removeItem(itemId);
+            TodoStore.emitChange();
+            break;
+
+        case TodoConstants.TODO_CLEAR:
+            await clearAll();
+            TodoStore.emitChange();
+            break;
     }
 }
 
