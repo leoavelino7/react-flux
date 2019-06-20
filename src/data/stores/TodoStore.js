@@ -6,9 +6,7 @@ import {
     TodoService
 } from "../services/TodoService";
 
-import {
-    TodoConstants
-} from "../constants/TodoConstants";
+import TodoConstants from "../constants/TodoConstants";
 
 const Channel = new Events.EventEmitter(),
     CHANGE_EVENT = "change";
