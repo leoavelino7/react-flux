@@ -16,6 +16,7 @@ class App extends Component {
 
       this.add = this.add.bind(this);
       this.remove = this.remove.bind(this);
+      this.update = this.update.bind(this);
   }
 
   async componentDidMount() {
@@ -49,13 +50,24 @@ class App extends Component {
       })
   }
 
+  async update(newItem) {
+    const { todoList } = this.state,
+      itemIndex = todoList.findIndex(item => item.id === newItem.id);
+
+    todoList[itemIndex] = newItem;
+    await TodoService.update(newItem);
+    this.setState({
+      todoList
+    })
+  }
+
   render() {
     const { state } = this;
     return (
       <div className="App">
           <NewTodoItem onAdd={this.add}/>
           <hr />
-          <TodoList items={state.todoList} onRemove={this.remove} />
+          <TodoList items={state.todoList} onRemove={this.remove} onUpdate={this.update} />
       </div>
     );
   }
