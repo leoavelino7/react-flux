@@ -4,7 +4,19 @@ import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
     static defaultProps = {
-        items: []
+        items: [],
+        onRemove: () => {}
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.remove = this.remove.bind(this);
+    }
+
+    remove(id) {
+        const { props } = this;
+        props.onRemove(id);
     }
 
     render() {
@@ -19,7 +31,7 @@ class TodoList extends Component {
             <ul className="todo-list">
                 {
                     items.map(item => (
-                        <TodoItem key={item.id} item={item} />
+                        <TodoItem key={item.id} item={item} onRemove={this.remove} />
                     ))
                 }
             </ul>
