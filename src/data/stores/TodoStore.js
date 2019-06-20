@@ -1,5 +1,7 @@
 import Events from "events";
 
+import AppDispatcher from "../dispatcher/appDispatcher";
+
 import {
     TodoService
 } from "../services/TodoService";
@@ -100,4 +102,5 @@ async function handleAction(action) {
     }
 }
 
+TodoStore.dispatchToken = AppDispatcher.register(handleAction);
 export default TodoStore;
